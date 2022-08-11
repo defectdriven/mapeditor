@@ -9,6 +9,9 @@ draw_gridlines = (height, width) => {
   let canvas = document.getElementById('map')
   let ctx = canvas.getContext('2d')
   let x = 0, y = 0, count = 0
+  canvas.addEventListener('mousedown', function(e) {
+    tile_clicked(canvas, e)
+  })
 
   fix_dpi(canvas)
   ctx.strokeStyle = "#000000";
@@ -31,25 +34,23 @@ draw_gridlines = (height, width) => {
   while (count--) tiles[count] = 0
 }
 
-tile_clicked = (e) => {
-  let canvas = document.getElementById('map')
+tile_clicked = (canvas, e) => {
   let ctx = canvas.getContext('2d')
   ctx.fillStyle = "#FF0FFF";
-  let pointX = e.clientX - 300
-  let grid_width = columns * tile_width
-  let column = columns
-  let grid_height = rows * tile_height
-  let row = rows
-  while (pointX < grid_width) {
-    grid_width -= tile_width
-    column -= 1
-  }
-  while (e.clientY < grid_height) {
-    grid_height -= tile_height
-    row -= 1
-  }
-  y = (row + 1) * (tile_height * 2)
-  x = column * (tile_width * 2)
-  
-  ctx.fillRect(x, y, tile_height * 2, tile_width * 2)
+  const rect = canvas.getBoundingClientRect()
+  let pointX = translatedX(canvas, rect, e.clientX)
+  let pointY = translatedY(canvas, rect, e.clientY)
+  console.log(`Translated x: ${pointX}`)
+  let colX = pointX % 32 === 0 ? pointX : pointX - (pointX % 32)
+  let colY = pointY % 32 === 0 ? pointY : pointY - (pointY % 32)
+  console.log(`ColX is: ${colX} and colY is: ${colY}`)
+  ctx.fillRect(colX, colY, 32, 32)
+}
+
+translatedX = (canvas, rect, x) => {
+  return (canvas.width / rect.width) * (x - rect.left)
+}
+
+translatedY = (canvas, rect, y) => {
+  return (canvas.height / rect.height) * (y - rect.top)
 }
