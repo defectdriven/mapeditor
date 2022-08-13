@@ -2,14 +2,12 @@
 let tiles = []
 let rows = 0
 let columns = 0
-let tile_width = 16
-let tile_height = 16
 
 draw_gridlines = (height, width) => {
   let canvas = document.getElementById('map')
   let ctx = canvas.getContext('2d')
   let x = 0, y = 0, count = 0
-  canvas.addEventListener('mousedown', function(e) {
+  canvas.addEventListener('mousedown', function (e) {
     tile_clicked(canvas, e)
   })
 
@@ -34,23 +32,25 @@ draw_gridlines = (height, width) => {
   while (count--) tiles[count] = 0
 }
 
+load_tileset = () => {
+  let canvas = document.getElementById('tileset')
+  let ctx = canvas.getContext('2d')
+  let img = new Image()
+  fix_dpi(canvas)
+  img.src = './public/Castle2.png'
+  img.onload = function () {
+    ctx.drawImage(img, 0, 0, img.width,    img.height, 
+                   0, 0, canvas.width, canvas.height)
+  }
+}
+
 tile_clicked = (canvas, e) => {
   let ctx = canvas.getContext('2d')
   ctx.fillStyle = "#FF0FFF";
   const rect = canvas.getBoundingClientRect()
   let pointX = translatedX(canvas, rect, e.clientX)
   let pointY = translatedY(canvas, rect, e.clientY)
-  console.log(`Translated x: ${pointX}`)
   let colX = pointX % 32 === 0 ? pointX : pointX - (pointX % 32)
   let colY = pointY % 32 === 0 ? pointY : pointY - (pointY % 32)
-  console.log(`ColX is: ${colX} and colY is: ${colY}`)
   ctx.fillRect(colX, colY, 32, 32)
-}
-
-translatedX = (canvas, rect, x) => {
-  return (canvas.width / rect.width) * (x - rect.left)
-}
-
-translatedY = (canvas, rect, y) => {
-  return (canvas.height / rect.height) * (y - rect.top)
 }

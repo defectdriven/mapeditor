@@ -69,6 +69,7 @@ select {
   background-color: white;
   display: flex;
   flex-direction: row;
+  margin: 0 5em;
   height: 960px;
   width: 1280px;
 }
@@ -76,7 +77,7 @@ select {
 .tilenav {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 512px;
 }
 
 .tile {
@@ -85,12 +86,13 @@ select {
 
 .tileset {
   background-color: aqua;
-  flex-grow: 1;
+  height: 512px;
+  width: 512px;
 }
 
 .map {
   background-color: antiquewhite;
-  width: 980px;
+  width: 768px;
   height: 960px;
 }
 
