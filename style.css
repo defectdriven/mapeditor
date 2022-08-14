@@ -80,8 +80,10 @@ select {
   width: 512px;
 }
 
-.tile {
+.tileviewer {
   background-color: black;
+  height: 512px;
+  width: 512px;
 }
 
 .tileset {
