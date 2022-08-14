@@ -66,9 +66,7 @@ tile_clicked = (canvas, e) => {
   let point = translateCoordinates(canvas, e.clientX, e.clientY)
   let colX = point.x % cellWidth === 0 ? point.x : point.x - (point.x % cellWidth)
   let colY = point.y % cellHeight === 0 ? point.y : point.y - (point.y % cellHeight)
-  //ctx.fillRect(colX, colY, cellWidth, cellHeight)
   let img = new Image()
-  fix_dpi(canvas)
   img.onload = function () {
     ctx.drawImage(img, 0, 190, 35, 35, colX, colY, 32, 32)
   }
